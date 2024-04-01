@@ -20,8 +20,8 @@ generateEl.addEventListener('click', () => {
     const hasUpper = uppercaseEl.checked
     const hasNumber = numbersEl.checked
     const hasSymbol = symbolsEl.checked
-
-
+    
+    resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, lenght)
 })
 
 function generatePassword(lower, upper, number, symbol, lenght) {
@@ -29,6 +29,22 @@ function generatePassword(lower, upper, number, symbol, lenght) {
     const typesCount = lower + upper + number + symbol
     const typesArr = [{lower}, {upper}, {number}, {symbol}].filter(item => Object.values(item)[0])
     console.log(typesArr);
+
+    if(typesCount === 0) {
+        return ''
+    }
+
+    for(let i = 0; i < lenght; i += typesCount) {
+        typesArr.forEach(type => {
+            const funcName = Object.keys(type)[0]
+            generatedPassword += randomFunc[funcName]()
+            console.log(funcName)
+        })
+    }
+
+    const finalPassword = generatedPassword.slice(0, lenght)
+      
+    return finalPassword
 
 }
 
